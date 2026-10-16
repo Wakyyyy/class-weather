@@ -6,10 +6,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>班级天气预报 · 心理状态问卷</title>
 <meta name="description" content="匿名填写，3 分钟。只用来了解我们班这段时间的整体状态。">
-<meta name="theme-color" content="#fdf6ec">
+<meta name="theme-color" content="#cfe2f1">
 <style>
 :root{
-  --bg-1:#fdf6ec;
+  --bg-1:#cfe2f1;
   --bg-2:#f8e8d2;
   --bg-3:#f0d5b4;
   --ink:#33261d;
@@ -42,19 +42,31 @@ body::after{
   background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2'/></filter><rect width='160' height='160' filter='url(%23n)'/></svg>");
 }
 
-/* ---------- 晨光 ---------- */
+/* ---------- 晨光 · 日出 ----------
+   天光偏冷压在上面，暖色沉到地平线，右上角一枚太阳，底下三层远山。
+   远山压在视口底部、山脚有雾，正文所在的那条竖带保持干净。 */
 .sky{position:fixed;inset:0;z-index:0;overflow:hidden;
   background:
-    radial-gradient(120% 58% at 84% -12%, rgba(232,160,84,.50) 0%, transparent 62%),
-    radial-gradient(95% 52% at 4% 4%, rgba(255,229,196,.80) 0%, transparent 62%),
-    linear-gradient(180deg,var(--bg-1) 0%,var(--bg-2) 54%,var(--bg-3) 100%);
+    radial-gradient(30% 18% at 74% 66%, rgba(255,226,164,.92) 0%, rgba(255,226,164,0) 72%),
+    radial-gradient(88% 40% at 52% 108%, rgba(244,154,78,.42) 0%, rgba(244,154,78,0) 66%),
+    linear-gradient(180deg,#cfe2f1 0%,#e2eaea 16%,#f6ecd8 34%,#fbe2bd 55%,#f7cba0 76%,#f0b47a 100%);
 }
-.cloud{position:absolute;border-radius:50%;filter:blur(30px);opacity:.52;
-  background:radial-gradient(closest-side,rgba(255,214,164,.92),transparent 72%);}
-.cloud.c1{width:300px;height:120px;top:10%;animation:drift 104s linear infinite;}
-.cloud.c2{width:220px;height:90px;top:33%;opacity:.40;animation:drift 140s linear infinite;}
-.cloud.c3{width:360px;height:130px;top:2%;opacity:.28;animation:drift 176s linear infinite;animation-delay:-50s}
-@keyframes drift{from{transform:translateX(-45vw)}to{transform:translateX(115vw)}}
+.sun{position:absolute;right:7%;top:4%;width:88px;height:88px;border-radius:50%;
+  background:radial-gradient(closest-side,#fffaf0 0%,#ffe9c0 46%,#ffd79b 66%,rgba(255,215,155,0) 80%);
+  filter:blur(2.5px);animation:sun 26s ease-in-out infinite alternate;
+}
+@keyframes sun{from{transform:scale(1);opacity:.94}to{transform:scale(1.05);opacity:1}}
+.land{position:absolute;left:0;right:0;bottom:0;width:100%;height:30vh;display:block;filter:blur(.5px)}
+.mist{position:absolute;left:0;right:0;bottom:0;height:28vh;
+  background:linear-gradient(180deg, rgba(253,248,240,0) 0%, rgba(253,248,240,.40) 58%, rgba(253,248,240,.55) 100%);
+}
+.cloud{position:absolute;border-radius:50%;
+  background:linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,.90), rgba(255,255,255,0));
+  filter:blur(24px);
+}
+.cloud.c1{width:70%;top:16%;left:2%;height:44px;opacity:.66;animation:drift 170s linear infinite}
+.cloud.c2{width:52%;top:28%;left:-14%;height:32px;opacity:.45;animation:drift 230s linear infinite}
+@keyframes drift{from{transform:translateX(-8%)}to{transform:translateX(18%)}}
 
 /* ---------- 内容 ---------- */
 main{position:relative;z-index:1;max-width:560px;margin:0 auto;
@@ -157,9 +169,15 @@ footer a{color:var(--ink-soft);text-decoration:none;border-bottom:1px dotted var
 <body>
 
 <div class="sky">
+  <div class="sun"></div>
+  <svg class="land" viewBox="0 0 1000 420" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0 150 C120 132 200 158 300 142 C420 122 480 150 600 134 C700 120 780 88 880 100 C940 108 980 130 1000 122 L1000 420 L0 420 Z" fill="#e6c7a2" fill-opacity=".48"/>
+    <path d="M0 228 C140 208 240 236 380 220 C520 204 620 232 760 218 C860 208 940 230 1000 216 L1000 420 L0 420 Z" fill="#d3ab7f" fill-opacity=".55"/>
+    <path d="M0 322 C160 302 300 330 460 316 C620 302 760 326 1000 306 L1000 420 L0 420 Z" fill="#c99e70" fill-opacity=".55"/>
+  </svg>
+  <div class="mist"></div>
   <div class="cloud c1"></div>
   <div class="cloud c2"></div>
-  <div class="cloud c3"></div>
 </div>
 
 <main>
